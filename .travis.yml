@@ -1,12 +1,15 @@
+language: minimal
+
 services:
   - docker
 
+if: tag IS present
+
 before_install:
-- docker pull debian:8
+- docker pull woodenfish42/hustoj-deb-debian8
 
 script:
-- docker run -v `pwd`/deb:/tmp/deb debian:8 sh -c "echo 777 > /tmp/deb/hustoj_debian_0.0.1-$TRAVIS_TAG"
-- docker run -v `pwd`/deb:/tmp/deb debian:8 sh -c "echo 777 > /tmp/deb/hustoj_ubuntu_0.0.1-$TRAVIS_TAG"
+- docker run -v `pwd`/deb:/tmp/deb woodenfish42/hustoj-deb-ubuntu18 sh -c "TRAVIS_TAG=$TRAVIS_TAG DISTRIBUTION=ubuntu18 /root/build.sh"
 
 deploy:
   provider: releases
